@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace XamGridNullCellStyle
 {
@@ -12,6 +13,8 @@ namespace XamGridNullCellStyle
     {
         public MainViewModel()
         {
+            NullBackgroundColor = (Color)ColorConverter.ConvertFromString("#FFFFFFE1");
+
             var table = new DataTable("Data");
             table.Columns.AddRange(new[]
             {
@@ -28,6 +31,24 @@ namespace XamGridNullCellStyle
 
             DataView = table.DefaultView;
             BuildTestData(table);
+        }
+
+        private Color? _nullBackgroundColor;
+        public Color? NullBackgroundColor
+        {
+            get { return _nullBackgroundColor; }
+            set
+            {
+                SetField(ref _nullBackgroundColor, value);
+                NullBackgroundBrush = (value != null) ? new SolidColorBrush(value.Value) : null;
+                RaisePropertyChanged("NullBackgroundBrush");
+            }
+        }
+
+        public Brush NullBackgroundBrush
+        {
+            get;
+            private set;
         }
 
         private DataView _dataView;
