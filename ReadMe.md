@@ -18,11 +18,11 @@ I also added two DataGrids for comparison, although technically it isn't fully w
 either. The style for the DataGrids is bound to the `TextBlock.Text` value and applies
 the style when `Text` is empty instead of only when the value is null.
 
-![MainWindow Screenshot](MainWindow.png)
+![MainWindow Screenshot](Images/MainWindow.png)
 
 Sample screenshot of SQL Server Management Studio with cell background:
 
-![SSMS Grid with NULL](SSMS_Results.png)
+![SSMS Grid with NULL](Images/SSMS_Results.png)
 
 ## Issues
 
