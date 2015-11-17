@@ -41,10 +41,9 @@
 		<Style x:Key="NullCellStyle" TargetType="{x:Type ig:CellControl}">
 			<Style.Triggers>
 				<!--
-				This is hardcoded to "Row[A]", but needs to use the Column binding instead.
-				So this applies the style to the entire row when Row[A] is DBNull.Value.
+				Instead of a hardcoded binding to "Row[A]", use CellControl.Cell.Value
 				-->
-				<DataTrigger Binding="{Binding Row[A], Converter={StaticResource IsNullConverter}}" Value="True">
+				<DataTrigger Binding="{Binding Cell.Value, RelativeSource={RelativeSource Self}, Converter={StaticResource IsNullConverter}}" Value="True">
 					<Setter Property="FontSize" Value="11"/>
 					<Setter Property="VerticalContentAlignment" Value="Center"/>
 					<Setter Property="Background" Value="{StaticResource NullCellBrush}"/>
@@ -275,10 +274,9 @@
 					<Style x:Key="NullCellStyle" TargetType="{x:Type ig:CellControl}">
 						<Style.Triggers>
 							<!--
-							This is hardcoded to "A", but needs to use the binding of each Column.
-							So currently this applies the style to the entire row where A is null
+							Instead of a hardcoded binding to "A", use CellControl.Cell.Value
 							-->
-							<DataTrigger Binding="{Binding A, Converter={StaticResource IsNullConverter}}" Value="True">
+							<DataTrigger Binding="{Binding Cell.Value, RelativeSource={RelativeSource Self}, Converter={StaticResource IsNullConverter}}" Value="True">
 								<Setter Property="FontSize" Value="11"/>
 								<Setter Property="VerticalContentAlignment" Value="Center"/>
 								<Setter Property="Background" Value="{StaticResource NullCellBrush}"/>
