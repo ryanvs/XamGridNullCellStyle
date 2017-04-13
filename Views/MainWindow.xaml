@@ -7,6 +7,8 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:local="clr-namespace:XamGridNullCellStyle"
 	xmlns:ig="http://schemas.infragistics.com/xaml"
+	xmlns:igPrim="http://schemas.infragistics.com/xaml/primitives"
+	xmlns:sys="clr-namespace:System;assembly=mscorlib"
 	mc:Ignorable="d"
 	Title="XamGrid with NULL cell style"
 	Height="400" Width="400"
@@ -35,6 +37,19 @@
 					<Setter Property="Background" Value="{StaticResource NullCellBrush}"/>
 				</Trigger>
 			</Style.Triggers>
+			<!--
+			<Setter Property="Text" Value="{Binding}"/>
+			<Style.Triggers>
+				<DataTrigger Binding="{Binding}" Value="{x:Static sys:String.Empty}">
+					<Setter Property="Background" Value="{StaticResource NullCellBrush}"/>
+					<Setter Property="Text" Value="NULL"/>
+				</DataTrigger>
+				<DataTrigger Binding="{Binding}" Value="{x:Null}">
+					<Setter Property="Background" Value="{StaticResource NullCellBrush}"/>
+					<Setter Property="Text" Value="NULL"/>
+				</DataTrigger>
+			</Style.Triggers>
+			-->
 			<!-- This causes the trigger to behave strangely and stops most of the styling
 			<Setter Property="HorizontalAlignment" Value="Right"/>
 			-->
@@ -127,6 +142,19 @@
 			</Style.Triggers>
 		</Style>
 
+		<ContextMenu x:Key="CellContextMenu">
+			<MenuItem Header="Cut" Command="ApplicationCommands.Cut" />
+			<MenuItem Header="Copy" Command="ApplicationCommands.Copy" />
+			<MenuItem Header="Paste" Command="ApplicationCommands.Paste" />
+		</ContextMenu>
+		<ContextMenu x:Key="HeaderContextMenu">
+			<MenuItem Header="Test" />
+			<MenuItem Header="Copy" Command="ApplicationCommands.Copy" />
+			<MenuItem Header="Paste" Command="ApplicationCommands.Paste" />
+		</ContextMenu>
+		<Style x:Key="DataGridHeaderContextMenu" TargetType="{x:Type DataGridColumnHeader}">
+			<Setter Property="ContextMenu" Value="{StaticResource HeaderContextMenu}"/>
+		</Style>
 	</Window.Resources>
 	<Grid>
 		<Grid.ColumnDefinitions>
@@ -158,6 +186,7 @@
 			<TextBlock Text="DataGrid with DataView" Grid.Column="0" Grid.Row="0" />
 			<DataGrid x:Name="DataGridWithDataView"
 					  Grid.Row="1"
+					  ContextMenu="{StaticResource CellContextMenu}"
 					  AutoGenerateColumns="False"
 					  CanUserAddRows="False"
 					  CanUserDeleteRows="False"
@@ -166,6 +195,11 @@
 					  HorizontalGridLinesBrush="LightGray"
 					  VerticalGridLinesBrush="LightGray"
 					  ItemsSource="{Binding DataView}">
+				<DataGrid.Resources>
+					<Style TargetType="{x:Type DataGridColumnHeader}">
+						<Setter Property="ContextMenu" Value="{StaticResource HeaderContextMenu}" />
+					</Style>
+				</DataGrid.Resources>
 				<!-- This doesn't work because the Binding is explicitly set to Value. It needs to evaluate the DataGridColumn Binding.
 				<DataGrid.CellStyle>
 					<Style TargetType="{x:Type DataGridCell}">
@@ -194,6 +228,7 @@
 			<TextBlock Text="DataGrid with ViewModel" Grid.Column="0" Grid.Row="0" />
 			<DataGrid x:Name="DataGridWithViewModel"
 					  Grid.Row="1"
+					  ContextMenu="{StaticResource CellContextMenu}"
 					  AutoGenerateColumns="False"
 					  CanUserAddRows="False"
 					  CanUserDeleteRows="False"
@@ -202,6 +237,11 @@
 					  HorizontalGridLinesBrush="LightGray"
 					  VerticalGridLinesBrush="LightGray"
 					  ItemsSource="{Binding TestData}">
+				<DataGrid.Resources>
+					<Style TargetType="{x:Type DataGridColumnHeader}">
+						<Setter Property="ContextMenu" Value="{StaticResource HeaderContextMenu}" />
+					</Style>
+				</DataGrid.Resources>
 				<DataGrid.Columns>
 					<DataGridTextColumn Header="A" Binding="{Binding A}" Width="Auto">
 						<DataGridTextColumn.ElementStyle>
@@ -229,6 +269,8 @@
 			<TextBlock Text="XamGrid with DataView" Grid.Column="0" Grid.Row="0" />
 			<ig:XamGrid x:Name="GridWithDataView"
 						Grid.Column="0" Grid.Row="1"
+						ContextMenu="{StaticResource CellContextMenu}"
+						SnapsToDevicePixels="True"
 						ItemsSource="{Binding DataView}"
 						CellStyle="{StaticResource NullCellStyle}">
 				<ig:XamGrid.Resources>
@@ -261,8 +303,13 @@
 			<TextBlock Text="XamGrid with ViewModel" Grid.Row="0" />
 			<ig:XamGrid x:Name="GridWithViewModel"
 					Grid.Row="1"
+					ContextMenu="{StaticResource CellContextMenu}"
+					SnapsToDevicePixels="True"
 					ItemsSource="{Binding TestData}">
 				<ig:XamGrid.Resources>
+					<Style TargetType="{x:Type igPrim:HeaderCellControl}">
+						<Setter Property="ContextMenu" Value="{StaticResource HeaderContextMenu}" />
+					</Style>
 					<Style x:Key="MouseRightButtonDown" TargetType="{x:Type ig:CellControl}">
 						<EventSetter Event="MouseRightButtonDown" Handler="Cell_MouseRightButtonDown"/>
 					</Style>

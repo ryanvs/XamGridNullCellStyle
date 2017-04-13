@@ -26,6 +26,12 @@ namespace XamGridNullCellStyle
         {
             InitializeComponent();
             GridWithDataView.DataObjectRequested += Grid_DataObjectRequested;
+            GridWithDataView.ContextMenuOpening += Grid_ContextMenuOpening;
+        }
+
+        private void Grid_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+            var grid = sender as XamGrid;
         }
 
         /// <summary>
